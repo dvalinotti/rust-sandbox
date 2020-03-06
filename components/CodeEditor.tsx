@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextField } from "@material-ui/core";
 import styled from 'styled-components';
-import AceEditor from "react-ace";
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -11,7 +10,7 @@ const Editor = (props) => {
   if (typeof window !== 'undefined') {
     const Ace = require('react-ace').default;
     require('ace-builds/src-noconflict/mode-rust');
-    require('ace-builds/src-noconflict/theme-monokai');
+    require('ace-builds/src-noconflict/theme-tomorrow');
 
     return <Ace {...props}/>
   }
@@ -29,12 +28,13 @@ const CodeEditor = () => {
   return (
     <Editor 
       mode="rust" 
-      theme="monokai"
+      theme="tomorrow"
       editorProps={{ $blockScrolling: true }}
       defaultValue={defaultValue}
       width="100%"
       showPrintMargin={false}
       fontSize={14}
+      tabSize={2}
     />
   );
 }
