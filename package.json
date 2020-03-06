@@ -1,0 +1,38 @@
+{
+  "name": "rust-sandbox",
+  "version": "1.0.0",
+  "description": "Run Rust programs in your browser",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dan-valinotti/rust-sandbox.git"
+  },
+  "author": "Dan Valinotti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dan-valinotti/rust-sandbox/issues"
+  },
+  "homepage": "https://github.com/dan-valinotti/rust-sandbox#readme",
+  "dependencies": {
+    "@types/next": "^9.0.0",
+    "@types/react": "^16.9.23",
+    "@zeit/next-typescript": "^1.1.1",
+    "micro": "^9.3.4",
+    "micro-cors": "^0.1.1",
+    "next": "^9.2.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "styled-components": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/micro-cors": "^0.1.0",
+    "@types/node": "^13.7.7",
+    "@types/styled-components": "^5.0.1",
+    "typescript": "^3.8.3"
+  }
+}
