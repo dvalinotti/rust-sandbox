@@ -4,20 +4,21 @@ import compileRust from '../../services/compileRust';
 function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === 'POST') {
-      const { main } = req.body;
+      const body = req.body;
       // Check that main function content exists
-      if (!main) {
+      if (!body) {
         return res.status(400).json({
           status: 400,
           message: "Invalid request body."
         });
       }
+      console.log(typeof body);
     
-      compileRust({ main }, (data: string) => {
+      compileRust(JSON.parse(body), (data: string) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
       
-        res.end(JSON.stringify({ content: data }));
+        res.end(JSON.stringify({ response: data }));
       });
     }
   } catch (error) {

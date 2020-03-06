@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from "path";
 import getConfig from 'next/config';
-import { exec, spawn } from "child_process";
+import { spawn } from "child_process";
 
 const { serverRuntimeConfig } = getConfig()
 type Request = {
@@ -31,20 +31,21 @@ export default function(req: Request, callback: Function ) {
   });
   
   run.stderr.on("data", data => {
-      console.log(`stderr: ${data}`);
+    console.log(`stderr: ${data}`);
   });
 
   run.on('error', (error) => {
-      console.log(`error: ${error.message}`);
+    console.log(`error: ${error.message}`);
   });
 
   run.on("close", code => {
-      console.log(`child process exited with code ${code}`);
-      callback(output);
+    console.log(`child process exited with code ${code}`);
+    callback(output);
+    run.kill();
   });
 
   run.stdout.on("data", data => {
     console.log(`stdout: ${data}`);
-    output += `${data}`;
+    output += `\n${data}`;
   });
 }

@@ -24,24 +24,25 @@ const StyledEditor = styled(Editor)`
 }
 `;
 
-const CodeEditor = () => {
+type Props = {
+  content: string;
+  updateContent: Function;
+};
+
+const CodeEditor = ({ content, updateContent }: Props) => {
   return (
     <Editor 
       mode="rust" 
       theme="tomorrow"
       editorProps={{ $blockScrolling: true }}
-      defaultValue={defaultValue}
       width="100%"
       showPrintMargin={false}
       fontSize={14}
       tabSize={2}
+      value={content}
+      onChange={updateContent}
     />
   );
 }
-
-const defaultValue = `fn main() { 
-  println!("hello world"); 
-}
-`
 
 export default CodeEditor;
