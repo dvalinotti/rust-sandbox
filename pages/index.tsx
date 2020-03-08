@@ -57,7 +57,7 @@ function HomePage() {
 
   const submitCode = () => {
     setTerminalContent("Compiling...");
-    
+
     fetch("http://localhost:3000/api/compiler", {
       method: "POST",
       body: JSON.stringify({ main: editorContent })
@@ -73,7 +73,7 @@ function HomePage() {
   }
 
   return (
-    <Layout title="Index">
+    <Layout title="Rust Sandbox">
       <Container maxWidth="md">
         <PageTitle variant="h4">Rust Sandbox</PageTitle>
         <PageTitleUnderline />

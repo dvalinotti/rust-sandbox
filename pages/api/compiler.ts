@@ -12,9 +12,8 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
           message: "Invalid request body."
         });
       }
-      console.log(typeof body);
     
-      compileRust(JSON.parse(body), (data: string) => {
+      compileRust(body, (data: string) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
       
