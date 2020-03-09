@@ -11,7 +11,7 @@ type Request = {
 
 export default function(req: Request, callback: Function ) {
   // Write main content to rust file
-  console.log("." + path.join(serverRuntimeConfig.PROJECT_ROOT, `/rust/run.sh`),  [`${req.token}`]);
+  console.log(req.token);
   const script = spawn(path.join(serverRuntimeConfig.PROJECT_ROOT, `/rust/run.sh`),  [`${req.token}`]);
   script.stderr.on("data", data => {
     console.log(`stderr: ${data}`);
@@ -27,6 +27,7 @@ export default function(req: Request, callback: Function ) {
 
   script.on("close", code => {
     console.log(`child process exited with code ${code}`);
+    let output = "";
     setTimeout(() => {
       fs.writeFileSync(
         path.join(serverRuntimeConfig.PROJECT_ROOT, `/rust/${req.token}/src/main.rs`), 
@@ -34,7 +35,6 @@ export default function(req: Request, callback: Function ) {
           encoding: 'utf8',
           flag: 'w'
         });
-      let output = "";
     
       const run = spawn(`cd ${path.join(serverRuntimeConfig.PROJECT_ROOT, `/rust/${req.token}`)} && cargo run `, {
         shell: true,
@@ -56,10 +56,29 @@ export default function(req: Request, callback: Function ) {
     
       run.on("close", code => {
         console.log(`child process exited with code ${code}`);
-        callback(output);
         run.kill();
+        setTimeout(() => {
+          let clean = spawn("rm", ["-rf", path.join(serverRuntimeConfig.PROJECT_ROOT, `/rust/`) + `${req.token}`]);
+          clean.stderr.on("data", data => {
+            console.log(`stderr: ${data}`);
+          });
+        
+          clean.on('error', (error) => {
+            console.log(`error: ${error.message}`);
+          });
+          
+          clean.stdout.on("data", data => {
+            console.log(`stdout: ${data}`);
+          });
+        
+          clean.on("close", code => {
+            console.log(`child process exited with code ${code}`);
+            callback(output);
+            clean.kill();
+          });  
+        }, 1000)
       });  
-    }, 2000);
+    }, 3000);
   });
   
   script.on("exit", code => {

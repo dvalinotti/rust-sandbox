@@ -13,6 +13,7 @@ const StyledLayout = styled.div`
   border: '1px solid #ddd'
 `;
 
+
 const Layout: React.FunctionComponent<Props> = ({ children, title }: Props) => (
   <StyledLayout>
     <Head>

@@ -5,6 +5,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === 'POST') {
       const body = req.body;
+      console.log(body);
       // Check that main function content exists
       if (!body) {
         return res.status(400).json({
@@ -13,7 +14,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
         });
       }
     
-      compileRust(body, (data: string) => {
+      compileRust(JSON.parse(body), (data: string) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
       

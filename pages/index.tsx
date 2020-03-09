@@ -7,6 +7,8 @@ import CompileButton from "../components/CompileButton";
 import TerminalOutput from "../components/TerminalOutput";
 import fetch, {Response} from 'node-fetch';
 
+const TokenGenerator = require('uuid-token-generator');
+
 const StyledPaper = styled(Paper)`
 &&& {
   padding: 30px;
@@ -49,10 +51,23 @@ type CompilerResponse = {
 function HomePage() {
   const [terminalContent, setTerminalContent] = React.useState<string>("");
   const [editorContent, setEditorContent] = React.useState<string>(defaultValue);
+  const [token, setToken] = React.useState<string | null>("");
+  const g = new TokenGenerator(256, TokenGenerator.BASE64);
+  
+  React.useEffect(() => {
+    console.log(window.localStorage);
+    if (window.localStorage.getItem('session') !== null) {
+      setToken(window.localStorage.getItem('session'));
+    } else if (window) {
+      const gen = "R" + g.generate();
+      setToken(gen);
+      window.localStorage.setItem('session', gen);
+    }
+  }, [token]);
+
 
   const updateEditor = (event: string) => {
     setEditorContent(event);
-    console.log(editorContent);
   }
 
   const submitCode = () => {
@@ -60,7 +75,10 @@ function HomePage() {
 
     fetch("http://localhost:3000/api/compiler", {
       method: "POST",
-      body: JSON.stringify({ main: editorContent })
+      body: JSON.stringify({ 
+        main: editorContent,
+        token: token,
+      })
     })
       .then((res: Response) => res.json())
       .then((json: CompilerResponse) => {
