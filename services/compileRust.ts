@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from "path";
 import getConfig from 'next/config';
-import { spawn, exec } from "child_process";
+import { spawn } from "child_process";
 
 const { serverRuntimeConfig } = getConfig()
 type Request = {

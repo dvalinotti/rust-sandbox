@@ -11,7 +11,7 @@ const StyledButton = styled(Button)`
 }
 `;
 
-const CompileButton = ({ onClick }) => {
+const CompileButton = ({ onClick }: any) => {
   return (
     <StyledButton 
       variant="contained" 

@@ -10,12 +10,6 @@ const StyledPaper = styled(Paper)`
 }
 `;
 
-const SectionTitle = styled(Typography)`
-&&& {
-  padding-bottom: 10px;
-}
-`;
-
 const TerminalContainer = styled.div`
   width: 100%;
   max-width: 100%;

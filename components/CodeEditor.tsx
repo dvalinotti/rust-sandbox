@@ -1,12 +1,6 @@
 import React from 'react';
-import { TextField } from "@material-ui/core";
-import styled from 'styled-components';
 
-const StyledTextField = styled(TextField)`
-  width: 100%;
-`;
-
-const Editor = (props) => {
+const Editor = (props: any | null) => {
   if (typeof window !== 'undefined') {
     const Ace = require('react-ace').default;
     require('ace-builds/src-noconflict/mode-rust');
@@ -17,12 +11,6 @@ const Editor = (props) => {
 
   return null;
 }
-
-const StyledEditor = styled(Editor)`
-&&& {
-  width: 100% !important
-}
-`;
 
 type Props = {
   content: string;
